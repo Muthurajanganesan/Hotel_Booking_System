@@ -19,6 +19,10 @@ HotelBooking/
     ├── public/              # Static assets
     └── src/
         ├── component/       # Shared React components
-        ├── modules/         # Feature-specific modules (auth, etc.)
-        └── pages/           # Application pages
+        ├── modules/         # Feature-specific modules
+        │   ├── admin/       # Admin Dashboard
+        │   ├── auth/        # Authentication
+        │   ├── booking/     # Booking management
+        │   └── payment/     # Payment processing
+        └── service/         # API services
 ```
