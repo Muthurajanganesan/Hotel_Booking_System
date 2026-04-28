@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "hotels")
 import java.util.List;
 
 @Entity
@@ -15,6 +17,16 @@ import java.util.List;
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    private String location;
+    private String description;
+    private String imageUrl;
+    
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.PENDING;
+
     private Long hotelId;
 
     private Long managerId; // Link to User.user_id
