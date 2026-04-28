@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+dist/
+build/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Java/Spring
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/
+.gradle/
+bin/
