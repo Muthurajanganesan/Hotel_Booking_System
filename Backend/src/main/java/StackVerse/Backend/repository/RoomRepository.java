@@ -20,4 +20,12 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
                            @Param("amenities") String amenities);
 
     List<Room> findByHotelId(Long hotelId);
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface RoomRepository extends JpaRepository<Room, Long> {
+    List<Room> findByHotelHotelId(Long hotelId);
+    List<Room> findByAvailabilityTrue();
 }
