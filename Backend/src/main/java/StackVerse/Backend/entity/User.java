@@ -1,6 +1,7 @@
 package StackVerse.Backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,14 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 @Data
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+    private String name;
+    private String email;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

@@ -1,5 +1,11 @@
 package StackVerse.Backend.dto;
 
+import StackVerse.Backend.entity.Hotel.Status;
+import lombok.Data;
+
+@Data
+public class HotelDTO {
+    private Long hotelId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +20,7 @@ public class HotelDTO {
     private String location;
     private String description;
     private String imageUrl;
+    private Status status;
+    private String managerName;
     private String status; // PENDING, APPROVED, REJECTED
 }
