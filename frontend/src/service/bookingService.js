@@ -18,12 +18,18 @@ const bookingService = {
     return response.data;
   },
 
-  cancelBooking: async (id) => {
-    const response = await axios.delete(`${API_URL}/bookings/${id}`);
+  cancelBooking: async (id, userId) => {
+    const response = await axios.delete(`${API_URL}/bookings/${id}?userId=${userId}`);
     return response.data;
   },
 
-  processPayment: async (paymentData) => {
+  updateBooking: async (id, bookingData, userId) => {
+    const response = await axios.put(`${API_URL}/bookings/${id}?userId=${userId}`, bookingData);
+    return response.data;
+  },
+
+  // Creates a Stripe PaymentIntent on the backend, returns clientSecret
+  createPaymentIntent: async (paymentData) => {
     const response = await axios.post(`${API_URL}/payments`, paymentData);
     return response.data;
   },

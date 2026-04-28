@@ -11,6 +11,8 @@ public class BookingDTO {
     private Long roomId;
     private LocalDateTime checkinDate;
     private LocalDateTime checkoutDate;
+    private LocalDateTime bookingDate;
+    private BigDecimal totalAmount;
     private String status;
     private BigDecimal fine;
 }

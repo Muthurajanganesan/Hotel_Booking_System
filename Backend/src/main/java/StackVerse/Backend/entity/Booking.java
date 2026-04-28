@@ -27,6 +27,8 @@ public class Booking {
 
     private LocalDateTime checkinDate;
     private LocalDateTime checkoutDate;
+    private LocalDateTime bookingDate = LocalDateTime.now();
+    private BigDecimal totalAmount;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;

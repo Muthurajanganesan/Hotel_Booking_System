@@ -4,8 +4,14 @@ import StackVerse.Backend.dto.PaymentDTO;
 import StackVerse.Backend.entity.Payment;
 import StackVerse.Backend.repository.PaymentRepository;
 import StackVerse.Backend.service.PaymentService;
+import com.stripe.Stripe;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import jakarta.annotation.PostConstruct;
+import java.math.BigDecimal;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -13,15 +19,39 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Value("${stripe.secret.key}")
+    private String stripeSecretKey;
+
+    @PostConstruct
+    public void init() {
+        Stripe.apiKey = stripeSecretKey;
+    }
+
     @Override
     public PaymentDTO processPayment(PaymentDTO paymentDTO) {
-        Payment payment = new Payment();
-        payment.setBookingId(paymentDTO.getBookingId());
-        payment.setAmount(paymentDTO.getAmount());
-        payment.setStatus(Payment.PaymentStatus.PAID); // In a real app, this would depend on external gateway
-        
-        Payment savedPayment = paymentRepository.save(payment);
-        return mapToDTO(savedPayment);
+        try {
+            // Create Stripe PaymentIntent (card only, no redirect needed)
+            PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
+                    .setAmount(paymentDTO.getAmount().multiply(new BigDecimal("100")).longValue())
+                    .setCurrency("usd")
+                    .addPaymentMethodType("card")
+                    .build();
+
+            PaymentIntent intent = PaymentIntent.create(params);
+
+            Payment payment = new Payment();
+            payment.setBookingId(paymentDTO.getBookingId());
+            payment.setAmount(paymentDTO.getAmount());
+            payment.setStatus(Payment.PaymentStatus.PENDING);
+            
+            paymentRepository.save(payment);
+
+            PaymentDTO responseDTO = mapToDTO(payment);
+            responseDTO.setClientSecret(intent.getClientSecret());
+            return responseDTO;
+        } catch (Exception e) {
+            throw new RuntimeException("Stripe payment error: " + e.getMessage());
+        }
     }
 
     @Override

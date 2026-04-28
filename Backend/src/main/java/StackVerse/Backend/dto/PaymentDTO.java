@@ -9,4 +9,5 @@ public class PaymentDTO {
     private Long bookingId;
     private BigDecimal amount;
     private String status;
+    private String clientSecret;
 }
