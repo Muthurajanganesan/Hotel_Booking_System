@@ -9,10 +9,10 @@ import theme from './theme/muiTheme';
 import Login from './modules/auth/Login';
 import Register from './modules/auth/Register';
 import ForgotPassword from './modules/auth/ForgotPassword';
+import AdminPanel from './modules/admin-dashboard/AdminPanel';
 
 // Placeholder components for other modules (stubs – other team members will fill these in)
 const Hotels   = () => <Box p={4}><Typography variant="h4">Hotels – Module 2</Typography></Box>;
-const AdminPanel = () => <Box p={4}><Typography variant="h4">Admin – Module 5</Typography></Box>;
 
 function AppContent() {
   const navigate = useNavigate();

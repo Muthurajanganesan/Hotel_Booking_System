@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
   Box, Button, TextField, Typography, Paper, CircularProgress,
-  InputAdornment, Divider, Alert, Stepper, Step, StepLabel
+  InputAdornment, IconButton, Divider, Alert, Stepper, Step, StepLabel
 } from '@mui/material';
-import { Hotel, Email, Lock, VpnKey } from '@mui/icons-material';
+import { Hotel, Email, Lock, VpnKey, Visibility, VisibilityOff } from '@mui/icons-material';
 import { forgotPassword, resetPassword } from '../../service/authService';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleGenerateOtp = async (e) => {
     e.preventDefault();
@@ -132,12 +133,22 @@ const ForgotPassword = () => {
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
               />
               <TextField
-                fullWidth label="New Password" type="password"
+                fullWidth label="New Password"
+                type={showPassword ? 'text' : 'password'}
                 value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
                 margin="normal" variant="outlined"
-                InputProps={{ startAdornment: (
-                  <InputAdornment position="start"><Lock sx={{ color: '#1976d2' }} /></InputAdornment>
-                )}}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start"><Lock sx={{ color: '#1976d2' }} /></InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
               />
               <Button fullWidth type="submit" variant="contained" size="large" disabled={loading}
