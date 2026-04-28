@@ -48,7 +48,8 @@ const BookingForm = ({ roomId, userId, pricePerNight = 100, onBookingSuccess }) 
       }, 1200);
 
     } catch (err) {
-      setError(err.response?.data || 'Room is not available for selected dates or an error occurred.');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Room is not available for selected dates or an error occurred.';
+      setError(errorMsg);
     }
   };
 

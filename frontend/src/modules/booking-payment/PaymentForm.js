@@ -65,7 +65,8 @@ const CheckoutForm = ({ bookingId, amount }) => {
         setSuccess(`✅ Payment of $${parseFloat(amount).toFixed(2)} successful! Your booking is confirmed.`);
       }
     } catch (err) {
-      setError(err.response?.data || err.message || 'Payment failed. Please try again.');
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Payment failed. Please try again.';
+      setError(errorMsg);
     }
     setLoading(false);
   };

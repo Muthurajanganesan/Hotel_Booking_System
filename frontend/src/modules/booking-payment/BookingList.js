@@ -40,7 +40,8 @@ const BookingList = ({ userId, onPayNow }) => {
       setAlert({ msg: 'Booking cancelled. Refund will be processed as per policy.', type: 'success' });
       fetchBookings();
     } catch (err) {
-      setAlert({ msg: err.response?.data || 'Error cancelling booking.', type: 'error' });
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Error cancelling booking.';
+      setAlert({ msg: errorMsg, type: 'error' });
     }
   };
 
@@ -64,7 +65,8 @@ const BookingList = ({ userId, onPayNow }) => {
       setEditDialogOpen(false);
       fetchBookings();
     } catch (err) {
-      setAlert({ msg: err.response?.data || 'Error updating booking. Dates may overlap.', type: 'error' });
+      const errorMsg = err.response?.data?.message || err.response?.data?.error || err.message || 'Error updating booking. Dates may overlap.';
+      setAlert({ msg: errorMsg, type: 'error' });
     }
   };
 
